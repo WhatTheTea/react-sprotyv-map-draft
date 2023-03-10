@@ -1,33 +1,53 @@
 import React, { ReactNode } from 'react';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 import './App.css';
+import * as districtsJSON from './districts.json'
 
+
+interface IMilcom
+{
+  name : string,
+  latlng : number[],
+  info : string
+}
 class App extends React.Component
 {
-  static readonly coords : Array<[number, number]> =
+  private readonly coords : Array<[number, number]> =
   [
-    [51.50243870000001, 31.3110552],
-    [48.4435097, 26.8421332],
-    [48.2920787, 25.9358367]
   ]
-  private children : Array<ReactNode> = []
-  TileLayer() : ReactNode
-  {
-  return <>
-    <TileLayer 
+  private readonly children : Array<ReactNode> = []
+
+  Marker(coords:[number,number]) : ReactNode {
+    return <Marker position={coords}/>
+  }
+  TileLayer() : ReactNode {
+  return <TileLayer 
           attribution='&copy; 
           <a href="https://www.openstreetmap.org/copyright">
           OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-  </>}
+        }
 
-  constructor({})
+  constructor(props?:any)
   {
-    super({})
+    super(props)
     this.children.push(this.TileLayer())
-    this.children.push(MarkerNode(App.coords[0]))
-    this.children.push(MarkerNode(App.coords[1]))
-    this.children.push(MarkerNode(App.coords[2]))
+    let districts = districtsJSON as Record<string, IMilcom[]>
+    for (const key in districts)
+    {
+      for (var i in districts[key])
+      {
+        const latlng = districts[key][i].latlng as [number, number]
+        if(latlng !== undefined)
+        {
+          this.coords.push(latlng)
+        }
+      }
+    }
+    for (var c of this.coords)
+    {
+      this.children.push(this.Marker(c))
+    }
   }
   render() {
     return <>
@@ -38,13 +58,6 @@ class App extends React.Component
       children={this.children}/>
     </>
   }
-}
-
-function MarkerNode(coords:[number,number]) : ReactNode
-{
-  return <>
-    <Marker position={coords}/>
-  </>
 }
 
 export default App;
