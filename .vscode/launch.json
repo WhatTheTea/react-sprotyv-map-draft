@@ -8,13 +8,16 @@
             "name": "Attach to Firefox",
             "type": "firefox",
             "request": "attach",
-            /*"url": "http://localhost:3000/",
             "pathMappings": [
                 {
                     "url": "http://localhost:3000/home/wtt/prog/ts/sprotyv-map/src",
                     "path": "${workspaceFolder}/src"
+                },
+                {
+                    "url": "http://localhost:3000/home/wtt/prog/ts/sprotyv-map/src/sprotyv-map",
+                    "path": "${workspaceFolder}/src/sprotyv-map"
                 }
-            ]*/
+            ]
         }
     ]
 }
