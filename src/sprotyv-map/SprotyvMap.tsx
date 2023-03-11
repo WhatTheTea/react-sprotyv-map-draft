@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
-import './App.css';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import '../styles/SprotyvMap.css';
 import * as districtsJSON from './districts.json'
 
 
@@ -10,11 +10,9 @@ interface IMilcom
   latlng : number[],
   info : string
 }
-class App extends React.Component
+class SprotyvMap extends React.Component
 {
-  private readonly coords : Array<[number, number]> =
-  [
-  ]
+  private readonly coords : Array<[number, number]> = []
   private readonly children : Array<ReactNode> = []
 
   Marker(coords:[number,number]) : ReactNode {
@@ -60,4 +58,4 @@ class App extends React.Component
   }
 }
 
-export default App;
+export default SprotyvMap;
